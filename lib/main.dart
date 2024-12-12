@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'asrar_homepage.dart';
 
 void main() {
-  runApp(AsrarApp());
+  runApp(const AsrarApp());
 }
 
 class AsrarApp extends StatelessWidget {
@@ -16,7 +16,7 @@ class AsrarApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: const Color(0xFF80D8FF),
       ),
-      home: const AsrarHomePage(),
+      home: AsrarHomePage(),  // هنا تم إزالة const
     );
   }
 }

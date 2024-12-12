@@ -1,174 +1,134 @@
 import 'package:flutter/material.dart';
-import 'colors.dart';
+import 'colors.dart'; 
+import 'ValidationPage.dart'; 
 
-class AsrarHomePage extends StatelessWidget {
+class AsrarHomePage extends StatefulWidget {
   const AsrarHomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: colors.white,
-      appBar: AppBar(
-        title: const Text('Asrar Home Page'),
-        backgroundColor: const Color.fromARGB(255, 67, 5, 51),
-        titleTextStyle: const TextStyle(
-          color: colors.white,
-        ),
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: colors.darkpink,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Column(
-                  children: [
-                    const Text(
-                      'Welcome to Asrar!',
-                      style: TextStyle(
-                        color: colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: () {
-                        // Navigate to the validation page
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ValidationPage(),
-                          ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(255, 67, 5, 51),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 50,
-                          vertical: 15,
-                        ),
-                      ),
-                      child: const Text(
-                        'Go to Validation Page',
-                        style: TextStyle(color: colors.white),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  _AsrarHomePageState createState() => _AsrarHomePageState();
 }
 
-class ValidationPage extends StatelessWidget {
-  const ValidationPage({super.key});
+class _AsrarHomePageState extends State<AsrarHomePage> {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  String? name;
+  String? email;
+  String? phone;
+  String? password;
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Validation Page'),
+        title: const Text('Asrar Home Page'),
         backgroundColor: const Color.fromARGB(255, 67, 5, 51),
+        titleTextStyle: const TextStyle(color: Colors.white),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Form(
-          key: formKey,
-          child: Column(
-            children: [
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Name',
-                  hintText: 'Enter your name',
-                  border: OutlineInputBorder(),
+      body: Center(
+        child: Container(
+          padding: const EdgeInsets.all(20.0),
+          decoration: BoxDecoration(
+            color: const Color.fromARGB(255, 152, 119, 144), 
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Form(
+            key: formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Enter your name',
+                    labelStyle: TextStyle(color: Colors.black), 
+                    prefixIcon: Icon(Icons.person, color: Colors.black), 
+                    filled: true, 
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
+                  ),
+                  validator: (value) => ValidationPage.validateName(value),
+                  onChanged: (value) => name = value,
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Name is required';
-                  } else if (!RegExp(r'^[a-zA-Z\s]+$').hasMatch(value)) {
-                    return 'Name must contain only letters';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 20),
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Phone Number',
-                  hintText: 'Enter your phone number',
-                  border: OutlineInputBorder(),
+                const SizedBox(height: 20),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Enter your Email',
+                    labelStyle: TextStyle(color: Colors.black), 
+                    prefixIcon: Icon(Icons.email, color: Colors.black), 
+                    filled: true, 
+                    fillColor: Colors.white, 
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black), 
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
+                  ),
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) => ValidationPage.validateEmail(value),
+                  onChanged: (value) => email = value,
                 ),
-                keyboardType: TextInputType.phone,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Phone number is required';
-                  } else if (!RegExp(r'^7\d{8}$').hasMatch(value)) {
-                    return 'Phone number must be 9 digits and start with 7';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 20),
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                  hintText: 'Enter your email',
-                  border: OutlineInputBorder(),
+                const SizedBox(height: 20),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Enter your phone number',
+                    labelStyle: TextStyle(color: Colors.black), 
+                    prefixIcon: Icon(Icons.phone, color: Colors.black), 
+                    filled: true, 
+                    fillColor: Colors.white, 
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black), 
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
+                  ),
+                  keyboardType: TextInputType.phone,
+                  validator: (value) => ValidationPage.validatePhone(value),
+                  onChanged: (value) => phone = value,
                 ),
-                keyboardType: TextInputType.emailAddress,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Email is required';
-                  } else if (!RegExp(
-                          r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
-                      .hasMatch(value)) {
-                    return 'Enter a valid email address';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 20),
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Password',
-                  hintText: 'Enter your password',
-                  border: OutlineInputBorder(),
+                const SizedBox(height: 20),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Enter your password',
+                    labelStyle: TextStyle(color: Colors.black), 
+                    prefixIcon: Icon(Icons.lock, color: Colors.black), 
+                    filled: true, 
+                    fillColor: Colors.white, 
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black), 
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
+                  ),
+                  obscureText: true,
+                  validator: (value) => ValidationPage.validatePassword(value),
+                  onChanged: (value) => password = value,
                 ),
-                obscureText: true,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Password is required';
-                  } else if (value.length < 6) {
-                    return 'Password must be at least 6 characters';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  if (formKey.currentState!.validate()) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('All inputs are valid!')),
-                    );
-                  }
-                },
-                child: const Text('Submit'),
-              ),
-            ],
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    if (formKey.currentState!.validate()) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('All inputs are valid!')),
+                      );
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: colors.darkpink,
+                    padding: const EdgeInsets.symmetric(horizontal: 90, vertical: 15),
+                  ),
+                  child: const Text('Submit', style: TextStyle(color: Colors.white)),
+                ),
+              ],
+            ),
           ),
         ),
       ),
