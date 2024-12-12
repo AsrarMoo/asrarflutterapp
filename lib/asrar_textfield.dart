@@ -24,7 +24,7 @@ class AsrarTextFields extends StatelessWidget {
             border: OutlineInputBorder(),
             fillColor: Colors.white,
             filled: true,
-            prefixIcon: Icon(Icons.email, color: const Color.fromARGB(255, 75, 82, 88))
+            prefixIcon: Icon(Icons.email, color: Color.fromARGB(255, 75, 82, 88))
           ),
          
         ),
@@ -35,7 +35,7 @@ class AsrarTextFields extends StatelessWidget {
             border: OutlineInputBorder(),
             fillColor: Colors.white,
             filled: true,
-             prefixIcon: Icon(Icons.lock, color: const Color.fromARGB(255, 75, 82, 88))
+             prefixIcon: Icon(Icons.lock, color: Color.fromARGB(255, 75, 82, 88))
           ),
         
         ),
@@ -46,7 +46,7 @@ class AsrarTextFields extends StatelessWidget {
             border: OutlineInputBorder(),
             fillColor: Colors.white,
             filled: true,
-             prefixIcon: Icon(Icons.phone, color: const Color.fromARGB(255, 75, 82, 88))
+             prefixIcon: Icon(Icons.phone, color: Color.fromARGB(255, 75, 82, 88))
           ),
         
         ),

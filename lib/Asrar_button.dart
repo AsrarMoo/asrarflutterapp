@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'colors.dart'; 
 
 class AsrarButton extends StatelessWidget {
+  const AsrarButton({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
@@ -11,7 +13,7 @@ class AsrarButton extends StatelessWidget {
         foregroundColor: colors.white,
         
       ),
-      child: Text('Submit'),
+      child: const Text('Submit'),
     
     );  }
 }
