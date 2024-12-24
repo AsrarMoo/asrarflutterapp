@@ -1,151 +1,99 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../controllers/theme_controller.dart';
 import '../theme/asrar_colors.dart';
 
 class AsrarCurvePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
+    final themeController = Get.find<ThemeController>();
     final paint = Paint()
-      ..color = Colors.white
+      ..color =
+          themeController.isDarkMode.value ? const Color.fromARGB(255, 63, 63, 63)! : Colors.white
       ..style = PaintingStyle.fill;
 
-    var mainPath = Path();
-    mainPath.moveTo(size.width * 0.08, size.height * 0.08);
-    
-    mainPath.quadraticBezierTo(
-      size.width * 0.2, 
-      size.height * 0.02,
-      size.width * 0.35, 
-      size.height * 0.08,
-    );
-    
-    mainPath.quadraticBezierTo(
-      size.width * 0.5, 
-      size.height * 0.14,
-      size.width * 0.65, 
-      size.height * 0.08,
-    );
-    
-    mainPath.quadraticBezierTo(
-      size.width * 0.8, 
-      size.height * 0.02,
-      size.width * 0.92, 
-      size.height * 0.08,
-    );
-    
-    mainPath.quadraticBezierTo(
-      size.width, 
-      size.height * 0.15,
-      size.width, 
-      size.height * 0.3,
-    );
-    
-    mainPath.quadraticBezierTo(
-      size.width * 1.05, 
-      size.height * 0.45,
-      size.width, 
-      size.height * 0.6,
-    );
-    
-    mainPath.quadraticBezierTo(
-      size.width * 0.95, 
-      size.height * 0.75,
-      size.width, 
-      size.height * 0.85,
+    var path = Path();
+
+    // نقطة البداية
+    path.moveTo(0, size.height * 0.1);
+
+    // المنحنى العلوي الأيسر
+    path.quadraticBezierTo(
+      size.width * 0.1,
+      0,
+      size.width * 0.5,
+      0,
     );
 
-    mainPath.quadraticBezierTo(
-      size.width, 
-      size.height * 0.95,
-      size.width * 0.92, 
-      size.height * 0.92,
+    // المنحنى العلوي الأيمن
+    path.quadraticBezierTo(
+      size.width * 0.9,
+      0,
+      size.width,
+      size.height * 0.1,
     );
-    
-    mainPath.quadraticBezierTo(
-      size.width * 0.8, 
-      size.height * 0.98,
-      size.width * 0.65, 
-      size.height * 0.92,
+
+    // الخط الأيمن
+    path.lineTo(size.width, size.height * 0.9);
+
+    // المنحنى السفلي الأيمن
+    path.quadraticBezierTo(
+      size.width * 0.9,
+      size.height,
+      size.width * 0.5,
+      size.height,
     );
-    
-    mainPath.quadraticBezierTo(
-      size.width * 0.5, 
-      size.height * 0.86,
-      size.width * 0.35, 
-      size.height * 0.92,
-    );
-    
-    mainPath.quadraticBezierTo(
-      size.width * 0.2, 
-      size.height * 0.98,
-      size.width * 0.08, 
-      size.height * 0.92,
-    );
-    
-    mainPath.quadraticBezierTo(
-      0, 
+
+    // المنحنى السفلي الأيسر
+    path.quadraticBezierTo(
+      size.width * 0.1,
+      size.height,
+      0,
       size.height * 0.9,
-      0, 
-      size.height * 0.7,
-    );
-    
-    mainPath.quadraticBezierTo(
-      size.width * -0.05, 
-      size.height * 0.5,
-      0, 
-      size.height * 0.3,
-    );
-    
-    mainPath.quadraticBezierTo(
-      0, 
-      size.height * 0.15,
-      size.width * 0.08, 
-      size.height * 0.08,
     );
 
-    canvas.drawShadow(mainPath, Colors.grey, 15, true);
-    canvas.drawPath(mainPath, paint);
+    // إغلاق المسار
+    path.close();
 
+    // إضافة الظل
+    canvas.drawShadow(
+      path,
+      Colors.grey.withOpacity(0.3),
+      10,
+      true,
+    );
+
+    // رسم الشكل الرئيسي
+    canvas.drawPath(path, paint);
+
+    // إضافة التموج الخفيف
     final wavePaint = Paint()
-      ..color = AsrarColors.darkPink.withOpacity(0.05)
+      ..color = (themeController.isDarkMode.value
+              ? Colors.white
+              : AsrarColors.darkPink)
+          .withOpacity(0.05)
       ..style = PaintingStyle.fill;
 
     var wavePath = Path();
-    wavePath.moveTo(0, size.height * 0.35);
-    
+    wavePath.moveTo(0, size.height * 0.5);
     wavePath.quadraticBezierTo(
-      size.width * 0.25,
-      size.height * 0.25,
       size.width * 0.5,
-      size.height * 0.35,
-    );
-    
-    wavePath.quadraticBezierTo(
-      size.width * 0.75,
-      size.height * 0.45,
+      size.height * 0.4,
       size.width,
-      size.height * 0.35,
+      size.height * 0.5,
     );
-    
-    wavePath.lineTo(size.width, size.height * 0.45);
-    
+    wavePath.lineTo(size.width, size.height * 0.6);
     wavePath.quadraticBezierTo(
-      size.width * 0.75,
-      size.height * 0.55,
       size.width * 0.5,
-      size.height * 0.45,
-    );
-    
-    wavePath.quadraticBezierTo(
-      size.width * 0.25,
-      size.height * 0.35,
+      size.height * 0.7,
       0,
-      size.height * 0.45,
+      size.height * 0.6,
     );
-    
     wavePath.close();
+
     canvas.drawPath(wavePath, wavePaint);
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
